@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: YSFHQ
+        psr4_prefix: YSFHQ
+        src_path: app

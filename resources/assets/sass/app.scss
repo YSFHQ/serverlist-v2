@@ -1,0 +1,31 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+#server-list {
+    td.join {
+        width: 3%;
+    }
+    td.name {
+        width: 23%;
+    }
+    td.ip {
+        width: 15%;
+    }
+    td.map {
+        width: 15%;
+    }
+    td.players {
+        width: 20%;
+    }
+    td.weather {
+        width: 10%;
+    }
+    td.options {
+        width: 15%;
+    }
+    div.progress {
+        margin-bottom: 0;
+    }
+    td.weather img, td.options img {
+        float: left;
+    }
+}
