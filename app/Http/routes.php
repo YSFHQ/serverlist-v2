@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages/home');
-});
+Route::resource('server', 'ServerController');
+
+Route::get('/', 'ServerController@index');
 Route::get('/map', function () {
     return view('pages/map');
 });

@@ -18,11 +18,10 @@ class CreateServersTable extends Migration
             $table->string('owner');
             $table->string('website');
             $table->string('ip');
-            $table->integer('port');
+            $table->integer('port')->default(7915);
             $table->string('country');
-            $table->string('os');
-            $table->string('lat');
-            $table->string('long');
+            $table->string('latitude');
+            $table->string('longitude');
             $table->timestamps();
         });
     }

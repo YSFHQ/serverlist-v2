@@ -11,5 +11,5 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'os', 'lat', 'long'];
+    protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude'];
 }

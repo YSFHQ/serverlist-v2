@@ -32,11 +32,11 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="{{ (Request::is('add-server') ? 'active' : '') }}">
-                    <a href="{!! URL::to('add-server') !!}">Add Server</a>
+                <li class="{{ (Request::is('server/create') ? 'active' : '') }}">
+                    <a href="{!! URL::to('server/create') !!}">Add Server</a>
                 </li>
-                <li class="{{ (Request::is('edit-server') ? 'active' : '') }}">
-                    <a href="{!! URL::to('edit-server') !!}">Edit Server</a>
+                <li class="{{ (Request::is('server/edit/1') ? 'active' : '') }}">
+                    <a href="{!! URL::to('server/edit/1') !!}">Edit Server</a>
                 </li>
             </ul>
         </div>
