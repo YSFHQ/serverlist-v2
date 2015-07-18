@@ -1,12 +1,16 @@
 @extends('app')
 
-@section('title') Add Server - @parent @stop
+@section('title') {{ isset($server) ? 'Edit' : 'Add' }} Server - @parent @stop
 @section('content')
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
 
-    {!! Form::open(['action' => 'ServerController@store']) !!}
+    @if (isset($server))
+    {!! Form::model($server, ['route' => ['server.update', $server->id]]) !!}
+    @else
+    {!! Form::open(['route' => 'server.store']) !!}
+    @endif
         <div class="form-group">
             {!! Form::label('name', 'Server name') !!}
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'The Best Server Ever', 'required' => 'required']) !!}
@@ -22,7 +26,7 @@
         <div class="form-group row">
             <div class="col-md-6">
             {!! Form::label('ip', 'IP Address') !!}
-            {!! Form::text('ip', null, ['class' => 'form-control', 'placeholder' => 'NOT 192.168.1.xxx', 'required' => 'required']) !!}
+            {!! Form::text('ip', (isset($server) ? $server->ip : Request::ip()), ['class' => 'form-control', 'placeholder' => 'NOT 192.168.1.xxx', 'required' => 'required']) !!}
             </div>
             <div class="col-md-6">
             {!! Form::label('port', 'Port') !!}
@@ -43,7 +47,7 @@
             {!! Form::text('longitude', null, ['class' => 'form-control', 'placeholder' => '-83.01234']) !!}
             </div>
         </div>
-        {!! Form::submit('Add Server', ['class' => 'btn btn-default']) !!}
+        {!! Form::submit((isset($server) ? 'Edit' : 'Add').' Server', ['class' => 'btn btn-default']) !!}
     {!! Form::close() !!}
 
     </div>

@@ -27,7 +27,7 @@ class ServerController extends Controller
      */
     public function create()
     {
-        return view('pages.add-server');
+        return view('pages.add-edit-server');
     }
 
     /**
@@ -62,7 +62,7 @@ class ServerController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.edit-server', ['server' => Server::find($id)]);
+        return view('pages.add-edit-server', ['server' => Server::find($id)]);
     }
 
     /**
@@ -77,6 +77,7 @@ class ServerController extends Controller
         if (Server::find($id)->update($request->except('_token'))) {
             // redirect to the show view with success flash
         }
+        return back()->withInput();
         // redirect back with error flash
     }
 
@@ -91,6 +92,7 @@ class ServerController extends Controller
         if (Server::find($id)->delete()) {
             // redirect to index with success
         }
+        return back()->withInput();
         // redirect to index with flash error message
     }
 }

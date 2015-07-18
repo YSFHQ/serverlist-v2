@@ -13,16 +13,8 @@
 
 Route::resource('server', 'ServerController');
 
-Route::get('/', 'ServerController@index');
-Route::get('/map', function () {
-    return view('pages/map');
-});
-Route::get('/stats', function () {
-    return view('pages/stats');
-});
-Route::get('/log', function () {
-    return view('pages/log');
-});
-Route::get('/help', function () {
-    return view('pages/help');
-});
+Route::get('/', ['uses' => 'ServerController@index', 'as' => 'index']);
+Route::get('/map', ['uses' => 'StaticController@map', 'as' => 'map']);
+Route::get('/stats', ['uses' => 'StaticController@stats', 'as' => 'stats']);
+Route::get('/log', ['uses' => 'StaticController@log', 'as' => 'log']);
+Route::get('/help', ['uses' => 'StaticController@help', 'as' => 'help']);

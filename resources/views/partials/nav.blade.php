@@ -8,36 +8,36 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">YSFlight Server List</a>
+            <a class="navbar-brand" href="{{ route('index') }}">YSFlight Server List</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{{ (Request::is('/') ? 'active' : '') }}">
-                    <a href="{!! URL::to('') !!}"><i class="fa fa-home"></i> Home</a>
+                    <a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a>
                 </li>
 
                 <li class="{{ (Request::is('map') ? 'active' : '') }}">
-                    <a href="{!! URL::to('map') !!}">Map</a>
+                    <a href="{{ route('map') }}">Map</a>
                 </li>
                 <li class="{{ (Request::is('stats') ? 'active' : '') }}">
-                    <a href="{!! URL::to('stats') !!}">Stats</a>
+                    <a href="{{ route('stats') }}">Stats</a>
                 </li>
                 <li class="{{ (Request::is('log') ? 'active' : '') }}">
-                    <a href="{!! URL::to('log') !!}">Log</a>
+                    <a href="{{ route('log') }}">Log</a>
                 </li>
                 <li class="{{ (Request::is('help') ? 'active' : '') }}">
-                    <a href="{!! URL::to('help') !!}">Help</a>
+                    <a href="{{ route('help') }}">Help</a>
                 </li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li class="{{ (Request::is('server/create') ? 'active' : '') }}">
-                    <a href="{!! URL::to('server/create') !!}">Add Server</a>
+                    <a href="{{ route('server.create') }}">Add Server</a>
                 </li>
-                <li class="{{ (Request::is('server/edit/1') ? 'active' : '') }}">
-                    <a href="{!! URL::to('server/edit/1') !!}">Edit Server</a>
-                </li>
+                {{-- <li class="{{ (Request::is('server/edit') ? 'active' : '') }}">
+                    <a href="{{ route('server.edit') }}">Edit Server</a>
+                </li> --}}
             </ul>
         </div>
     </div>
