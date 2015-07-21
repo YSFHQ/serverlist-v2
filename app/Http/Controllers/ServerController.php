@@ -3,6 +3,7 @@
 namespace YSFHQ\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use YSFHQ\Http\Requests;
 use YSFHQ\Http\Controllers\Controller;
@@ -40,7 +41,7 @@ class ServerController extends Controller
     {
         // we should check if the server is online before we save it
         $server = Server::firstOrCreate($request->except('_token'));
-        return view('pages.view-server', ['server' => $server]);
+        return redirect()->route('server.show', ['id' => $server->id])->with('success', 'Server created.');
     }
 
     /**
@@ -51,7 +52,11 @@ class ServerController extends Controller
      */
     public function show($id)
     {
-        return view('pages.view-server', ['server' => Server::findOrFail($id)]);
+        try {
+            return view('pages.view-server', ['server' => Server::findOrFail($id)]);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('index')->with('error', 'Server not found.');
+        }
     }
 
     /**
@@ -62,7 +67,11 @@ class ServerController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.add-edit-server', ['server' => Server::find($id)]);
+        try {
+            return view('pages.add-edit-server', ['server' => Server::findOrFail($id)]);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('index')->with('error', 'Server not found.');
+        }
     }
 
     /**
@@ -75,10 +84,9 @@ class ServerController extends Controller
     public function update(Request $request, $id)
     {
         if (Server::find($id)->update($request->except('_token'))) {
-            // redirect to the show view with success flash
+            return redirect()->route('server.show', ['id' => $id])->with('success', 'Server updated.');
         }
-        return back()->withInput();
-        // redirect back with error flash
+        return back()->withInput()->with('error', 'Could not update server.');
     }
 
     /**
@@ -90,9 +98,8 @@ class ServerController extends Controller
     public function destroy($id)
     {
         if (Server::find($id)->delete()) {
-            // redirect to index with success
+            return redirect()->route('index')->with('success', 'Server deleted.');
         }
-        return back()->withInput();
-        // redirect to index with flash error message
+        return redirect()->route('index')->with('error', 'Could not delete server.');
     }
 }

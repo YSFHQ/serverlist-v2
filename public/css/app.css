@@ -5992,22 +5992,25 @@ button.close {
     display: none !important; } }
 
 #server-list td.join {
-  width: 3%; }
+  width: 3%;
+  text-align: center; }
 
 #server-list td.name {
-  width: 23%; }
+  width: 25%; }
+  #server-list td.name form {
+    float: right; }
 
 #server-list td.ip {
-  width: 15%; }
+  width: 12%; }
 
 #server-list td.map {
-  width: 15%; }
+  width: 12%; }
 
 #server-list td.players {
   width: 20%; }
 
 #server-list td.weather {
-  width: 10%; }
+  width: 5%; }
 
 #server-list td.options {
   width: 15%; }

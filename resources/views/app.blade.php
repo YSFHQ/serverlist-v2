@@ -28,12 +28,24 @@
     @include('partials.nav')
 
     <div class="container">
+        @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+        @endif
+
         @yield('content')
     </div>
 
     @include('partials.footer')
 
     <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

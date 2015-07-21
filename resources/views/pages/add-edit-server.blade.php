@@ -7,7 +7,7 @@
     <div class="col-md-6 col-md-offset-3">
 
     @if (isset($server))
-    {!! Form::model($server, ['route' => ['server.update', $server->id]]) !!}
+    {!! Form::model($server, ['route' => ['server.update', $server->id], 'method' => 'put']) !!}
     @else
     {!! Form::open(['route' => 'server.store']) !!}
     @endif

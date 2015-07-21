@@ -3,21 +3,25 @@
 #server-list {
     td.join {
         width: 3%;
+        text-align: center;
     }
     td.name {
-        width: 23%;
+        width: 25%;
+        form {
+            float: right;
+        }
     }
     td.ip {
-        width: 15%;
+        width: 12%;
     }
     td.map {
-        width: 15%;
+        width: 12%;
     }
     td.players {
         width: 20%;
     }
     td.weather {
-        width: 10%;
+        width: 5%;
     }
     td.options {
         width: 15%;

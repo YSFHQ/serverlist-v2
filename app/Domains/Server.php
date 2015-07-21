@@ -13,8 +13,46 @@ class Server extends Model
      */
     protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude'];
 
+    public function getStatusAttribute()
+    {
+        return 'online';
+    }
 
-    public function createWeatherImg($visib, $heading)
+    public function getGameAttribute()
+    {
+        $result = [
+            'map' => 'HAWAII',
+            'players' => [
+                'flying' => 4,
+                'notflying' => 2,
+                'total' => 6,
+            ],
+            'weather' => [
+                'is_day' => true,
+                'visib' => 4000,
+                'wind_x' => 1,
+                'wind_y' => 4,
+                'wind_z' => 3,
+            ],
+            'options' => [
+                'blackout' => true,
+                'collisions' => true,
+                'landev' => false,
+                'missiles' => false,
+                'weapon' => false,
+                'radar' => 'RADARALTI 304.80m | show player names within 4000m',
+                'f3' => true,
+            ],
+        ];
+
+        $result['weather']['wind_dir'] = atan2(intval($result['weather']['wind_x']), intval($result['weather']['wind_y']));
+        $result['weather']['wind_speed'] = round((rad2deg(atan2(intval($result['weather']['wind_x']), intval($result['weather']['wind_y']))) + 360) % 360, 0);
+        $result['weather']['weather_img'] = $this->createWeatherImg($result['weather']['visib'], $result['weather']['wind_dir']);
+
+        return json_decode(json_encode($result));
+    }
+
+    private function createWeatherImg($visib, $heading)
     {
         $im = imagecreatetruecolor(40, 20);
 
@@ -37,7 +75,7 @@ class Server extends Model
         ob_start();
         imagepng($im);
         $buffer = ob_get_clean();
-        ob_end_clean();
+        //ob_end_clean();
         $output = base64_encode($buffer);
 
         imagedestroy($im);
