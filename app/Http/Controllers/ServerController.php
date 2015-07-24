@@ -111,6 +111,7 @@ class ServerController extends Controller
             $input['latitude'] = $location['lat'];
             $input['longitude'] = $location['lon'];
             if ($server->update($input)) {
+                $server->checkServer();
                 return redirect()->route('server.show', ['id' => $id])->with('success', 'Server updated.');
             }
             return back()->withInput()->with('error', 'Could not update server.');
