@@ -2,6 +2,8 @@
 
 namespace YSFHQ\Commands;
 
+use Torann\GeoIP\GeoIPFacade as GeoIP;
+
 use YSFHQ\Commands\Command;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Cache;
@@ -86,7 +88,11 @@ class CheckServer extends Command implements SelfHandling
 
         Cache::put($this->server->ip.':'.$this->server->port, $result_obj, 5);
 
-        $this->server->touch();
+        $location = GeoIP::getLocation(gethostbyname($this->server->ip));
+        $this->server->country = $location['isoCode'];
+        $this->server->latitude = $location['lat'];
+        $this->server->longitude = $location['lon'];
+        $this->server->save();
 
         return $result_obj;
     }

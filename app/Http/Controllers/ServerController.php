@@ -52,11 +52,9 @@ class ServerController extends Controller
     {
         $input = $request->except('_token');
         $location = GeoIP::getLocation(gethostbyname($input['ip']));
-        if (!$location['default']) {
-            $input['country'] = $location['isoCode'];
-            $input['latitude'] = $location['lat'];
-            $input['longitude'] = $location['lon'];
-        }
+        $input['country'] = $location['isoCode'];
+        $input['latitude'] = $location['lat'];
+        $input['longitude'] = $location['lon'];
         $server = Server::firstOrCreate($input);
         $server->checkServer();
         return redirect()->route('server.show', ['id' => $server->id])->with('success', 'Server created.');
@@ -109,11 +107,9 @@ class ServerController extends Controller
         if (gethostbyname($server->ip)==$request->ip()) {
             $input = $request->except('_token');
             $location = GeoIP::getLocation(gethostbyname($input['ip']));
-            if (!$location['default']) {
-                $input['country'] = $location['isoCode'];
-                $input['latitude'] = $location['lat'];
-                $input['longitude'] = $location['lon'];
-            }
+            $input['country'] = $location['isoCode'];
+            $input['latitude'] = $location['lat'];
+            $input['longitude'] = $location['lon'];
             if ($server->update($input)) {
                 return redirect()->route('server.show', ['id' => $id])->with('success', 'Server updated.');
             }

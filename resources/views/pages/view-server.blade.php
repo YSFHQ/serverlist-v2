@@ -6,6 +6,12 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
 
+        <h2>{{ $server->name }}</h2>
+        <h4>Owned by <em>{{ $server->owner }}</em></h4>
+        @if ($server->website)
+        <h4>Website: <a href="{{ $server->website }}">{{ $server->website }}</a></h4>
+        @endif
+
         <table class="table">
             <caption>Server Info</caption>
             {{-- <thead>
