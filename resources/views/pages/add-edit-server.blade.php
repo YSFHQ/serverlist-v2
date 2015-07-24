@@ -33,7 +33,7 @@
             {!! Form::text('port', '7915', ['class' => 'form-control', 'placeholder' => '7915', 'required' => 'required']) !!}
             </div>
         </div>
-        <div class="form-group row">
+        {{-- <div class="form-group row">
             <div class="col-md-4">
             {!! Form::label('country', 'Country') !!}
             {!! Form::text('country', null, ['class' => 'form-control', 'placeholder' => 'US', 'required' => 'required']) !!}
@@ -46,7 +46,7 @@
             {!! Form::label('longitude', 'Longitude') !!}
             {!! Form::text('longitude', null, ['class' => 'form-control', 'placeholder' => '-83.01234']) !!}
             </div>
-        </div>
+        </div> --}}
         {!! Form::submit((isset($server) ? 'Edit' : 'Add').' Server', ['class' => 'btn btn-default']) !!}
     {!! Form::close() !!}
 

@@ -139,6 +139,11 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
+         * Vendor Service Providers...
+         */
+        Torann\GeoIP\GeoIPServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         YSFHQ\Providers\AppServiceProvider::class,
@@ -194,6 +199,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+        'GeoIP'     => Torann\GeoIP\GeoIPFacade::class,
 
     ],
 

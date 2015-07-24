@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        \YSFHQ\Console\Commands\CheckServer::class,
         \YSFHQ\Console\Commands\Inspire::class,
     ];
 

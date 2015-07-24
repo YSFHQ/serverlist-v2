@@ -1,1 +1,1 @@
-{"version":3,"sources":["app.js"],"names":[],"mappings":"AAAA","file":"app.js","sourcesContent":[""],"sourceRoot":"/source/"}
+{"version":3,"sources":["app.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA","file":"app.js","sourcesContent":["$('li.disabled a').click(function (event) {\n    event.preventDefault();\n});\n"],"sourceRoot":"/source/"}

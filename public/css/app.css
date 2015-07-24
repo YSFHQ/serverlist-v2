@@ -6010,10 +6010,13 @@ button.close {
   width: 20%; }
 
 #server-list td.weather {
-  width: 5%; }
+  width: 7%; }
 
 #server-list td.options {
-  width: 15%; }
+  width: 13%; }
+
+#server-list td.clock {
+  width: 3%; }
 
 #server-list div.progress {
   margin-bottom: 0; }

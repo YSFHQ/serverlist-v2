@@ -4,6 +4,9 @@ namespace YSFHQ\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Cache;
+
+use Torann\GeoIP\GeoIPFacade as GeoIP;
 
 use YSFHQ\Http\Requests;
 use YSFHQ\Http\Controllers\Controller;
@@ -16,9 +19,17 @@ class ServerController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.home', ['servers' => Server::all()]);
+        foreach (Server::all() as $server) {
+            if (!Cache::has($server->ip.':'.$server->port)) {
+                $server->checkServer();
+            }
+        }
+        return view('pages.home', [
+            'servers' => Server::all(),
+            'location' => GeoIP::getLocation(gethostbyname($request->ip()))
+        ]);
     }
 
     /**
@@ -39,8 +50,15 @@ class ServerController extends Controller
      */
     public function store(Request $request)
     {
-        // we should check if the server is online before we save it
-        $server = Server::firstOrCreate($request->except('_token'));
+        $input = $request->except('_token');
+        $location = GeoIP::getLocation(gethostbyname($input['ip']));
+        if (!$location['default']) {
+            $input['country'] = $location['isoCode'];
+            $input['latitude'] = $location['lat'];
+            $input['longitude'] = $location['lon'];
+        }
+        $server = Server::firstOrCreate($input);
+        $server->checkServer();
         return redirect()->route('server.show', ['id' => $server->id])->with('success', 'Server created.');
     }
 
@@ -50,7 +68,7 @@ class ServerController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
             return view('pages.view-server', ['server' => Server::findOrFail($id)]);
@@ -65,10 +83,14 @@ class ServerController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         try {
-            return view('pages.add-edit-server', ['server' => Server::findOrFail($id)]);
+            $server = Server::findOrFail($id);
+            if (gethostbyname($server->ip)==$request->ip()) {
+                return view('pages.add-edit-server', ['server' => $server]);
+            }
+            return redirect()->route('index')->with('error', 'You do not have proper permissions to edit the server.');
         } catch (ModelNotFoundException $e) {
             return redirect()->route('index')->with('error', 'Server not found.');
         }
@@ -83,10 +105,21 @@ class ServerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Server::find($id)->update($request->except('_token'))) {
-            return redirect()->route('server.show', ['id' => $id])->with('success', 'Server updated.');
+        $server = Server::findOrFail($id);
+        if (gethostbyname($server->ip)==$request->ip()) {
+            $input = $request->except('_token');
+            $location = GeoIP::getLocation(gethostbyname($input['ip']));
+            if (!$location['default']) {
+                $input['country'] = $location['isoCode'];
+                $input['latitude'] = $location['lat'];
+                $input['longitude'] = $location['lon'];
+            }
+            if ($server->update($input)) {
+                return redirect()->route('server.show', ['id' => $id])->with('success', 'Server updated.');
+            }
+            return back()->withInput()->with('error', 'Could not update server.');
         }
-        return back()->withInput()->with('error', 'Could not update server.');
+        return back()->withInput()->with('error', 'You do not have proper permissions to update the server.');
     }
 
     /**
@@ -95,11 +128,15 @@ class ServerController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        if (Server::find($id)->delete()) {
-            return redirect()->route('index')->with('success', 'Server deleted.');
+        $server = Server::findOrFail($id);
+        if (gethostbyname($server->ip)==$request->ip()) {
+            if ($server->delete()) {
+                return redirect()->route('index')->with('success', 'Server deleted.');
+            }
+            return redirect()->route('index')->with('error', 'Could not delete server.');
         }
-        return redirect()->route('index')->with('error', 'Could not delete server.');
+        return redirect()->route('index')->with('error', 'You do not have proper permissions to delete the server.');
     }
 }

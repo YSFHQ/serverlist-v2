@@ -3,6 +3,10 @@
 namespace YSFHQ\Domains;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cache;
+
+use YSFHQ\Commands\CheckServer;
 
 class Server extends Model
 {
@@ -13,74 +17,52 @@ class Server extends Model
      */
     protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude'];
 
+    public function distance($location, $unit = "M") {
+        $lat1 = $this->latitude;
+        $lon1 = $this->longitude;
+        $lat2 = $location['lat'];
+        $lon2 = $location['lon'];
+
+        try {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+            $unit = strtoupper($unit);
+        } catch (\Exception $e) {
+            return -1;
+        }
+
+        if ($unit == "K") {
+            return ($miles * 1.609344);
+        } else if ($unit == "N") {
+            return ($miles * 0.8684);
+        } else {
+            return $miles;
+        }
+    }
+
+    public function lastupdated()
+    {
+        return $this->updated_at->diffForHumans();
+    }
+
     public function getStatusAttribute()
     {
-        return 'online';
+        return Cache::get($this->ip.':'.$this->port)->status;
     }
 
     public function getGameAttribute()
     {
-        $result = [
-            'map' => 'HAWAII',
-            'players' => [
-                'flying' => 4,
-                'notflying' => 2,
-                'total' => 6,
-            ],
-            'weather' => [
-                'is_day' => true,
-                'visib' => 4000,
-                'wind_x' => 1,
-                'wind_y' => 4,
-                'wind_z' => 3,
-            ],
-            'options' => [
-                'blackout' => true,
-                'collisions' => true,
-                'landev' => false,
-                'missiles' => false,
-                'weapon' => false,
-                'radar' => 'RADARALTI 304.80m | show player names within 4000m',
-                'f3' => true,
-            ],
-        ];
-
-        $result['weather']['wind_dir'] = atan2(intval($result['weather']['wind_x']), intval($result['weather']['wind_y']));
-        $result['weather']['wind_speed'] = round((rad2deg(atan2(intval($result['weather']['wind_x']), intval($result['weather']['wind_y']))) + 360) % 360, 0);
-        $result['weather']['weather_img'] = $this->createWeatherImg($result['weather']['visib'], $result['weather']['wind_dir']);
-
-        return json_decode(json_encode($result));
+        return Cache::get($this->ip.':'.$this->port);
     }
 
-    private function createWeatherImg($visib, $heading)
+    public function checkServer()
     {
-        $im = imagecreatetruecolor(40, 20);
-
-        $heading=$heading-1.570796;
-
-        $color = (20000 - min(20000, $visib)) * 0.01274;
-
-        $black = imagecolorallocate($im, 0, 0, 0);
-        $blue  = imagecolorallocate($im, $color, $color, 255);
-        $white = imagecolorallocate($im, 255, 255, 255);
-
-        imagefilledrectangle($im, 0, 0, 40, 20, $white);
-        imagefilledrectangle($im, 0, 0, 20, 20, $blue);
-
-        imageellipse($im,30,10,19,19,$black);
-        $ax = 30 + 6 * cos($heading);
-        $ay = 10 + 6 * sin($heading);
-        imageline($im, 30, 10, $ax, $ay, $black);
-
-        ob_start();
-        imagepng($im);
-        $buffer = ob_get_clean();
-        //ob_end_clean();
-        $output = base64_encode($buffer);
-
-        imagedestroy($im);
-
-        return 'data:image/png;base64,'.$output;
+        return Bus::dispatch(
+            new CheckServer($this)
+        );
     }
 
 }
