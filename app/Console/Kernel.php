@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \YSFHQ\Console\Commands\CheckServer::class,
+        \YSFHQ\Console\Commands\CheckServers::class,
         \YSFHQ\Console\Commands\Inspire::class,
     ];
 
@@ -25,7 +26,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $schedule->command('ys:checkservers')->everyFiveMinutes();
     }
 }
