@@ -5991,6 +5991,9 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+.checkbox label + label {
+  margin-left: 2em; }
+
 #server-list td.join {
   width: 3%;
   text-align: center; }

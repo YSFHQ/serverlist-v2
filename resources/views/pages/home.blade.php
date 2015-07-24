@@ -4,18 +4,37 @@
 @section('content')
 <div class="row">
     <h3>Servers</h3>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="toggleMap"> Map
+        </label>
+        <label>
+            <input type="checkbox" id="togglePlayers"> Players
+        </label>
+        <label>
+            <input type="checkbox" id="toggleWeather"> Weather
+        </label>
+        <label>
+            <input type="checkbox" id="toggleOptions"> Options
+        </label>
+        <label>
+            <input type="checkbox" id="toggleOffline"> <span class="text-danger">Offline</span>
+        </label>
+    </div>
+
     <div class="table-responsive">
     <table class="table table-hover" id="server-list">
         <thead>
             <tr>
-                <th></th>
-                <th>Server Name</th>
-                <th>IP(:port)</th>
-                <th>Map</th>
-                <th>Players</th>
-                <th>Weather</th>
-                <th>Options</th>
-                <th></th>
+                <th class="join"></th>
+                <th class="name">Server Name</th>
+                <th class="ip">IP(:port)</th>
+                <th class="map">Map</th>
+                <th class="players">Players</th>
+                <th class="weather">Weather</th>
+                <th class="options">Options</th>
+                <th class="clock"></th>
             </tr>
         </thead>
         <tbody>

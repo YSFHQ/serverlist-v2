@@ -1,5 +1,11 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.checkbox {
+    label + label {
+        margin-left: 2em;
+    }
+}
+
 #server-list {
     td.join {
         width: 3%;
