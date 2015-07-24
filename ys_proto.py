@@ -177,7 +177,7 @@ class Apps:
             self.packets += 1
             self.server.status = "online"
             if not(self.process(size, type, buffer)):
-                self.server.status = "locked"
+                self.server.status = "online" # should be laggy
             # if there were and error
             #  or if we see an aircraft_list packet, we exit
             #if type == 0:# or type==44:
@@ -281,7 +281,7 @@ class Apps:
             self.server.userList.append(user)
             if user[0] == 1 or user[0] == 3:
                 self.server.flyingUsers += 1
-            if user[4] != self.username:
+            if user[4] != self.username and user[4] != 'Console Server':
                 self.server.users += 1
             logger.info("user " + str(user))
         elif type == 39:
