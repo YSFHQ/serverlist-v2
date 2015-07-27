@@ -25,7 +25,7 @@
         </div>
         <div class="form-group row">
             <div class="col-md-6">
-            {!! Form::label('ip', 'IP Address') !!}
+            {!! Form::label('ip', 'IP Address (currently '.Request::ip().')') !!}
             {!! Form::text('ip', (isset($server) ? $server->ip : Request::ip()), ['class' => 'form-control', 'placeholder' => 'NOT 192.168.1.xxx', 'required' => 'required']) !!}
             </div>
             <div class="col-md-6">
