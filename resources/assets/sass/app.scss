@@ -8,32 +8,31 @@
 
 #server-list {
     td.join {
-        width: 3%;
-        text-align: center;
+        min-width: 125px;
     }
     td.name {
-        width: 25%;
+        min-width: 150px;
         form {
             float: right;
         }
     }
     td.ip {
-        width: 12%;
+        min-width: 100px;
     }
     td.map {
-        width: 12%;
+        min-width: 100px;
     }
     td.players {
-        width: 20%;
+        min-width: 150px;
     }
     td.weather {
-        width: 7%;
+        min-width: 70px;
     }
     td.options {
-        width: 14%;
+        min-width: 150px;
     }
     td.clock {
-        width: 3%;
+        min-width: 30px;
     }
     div.progress {
         margin-bottom: 0;

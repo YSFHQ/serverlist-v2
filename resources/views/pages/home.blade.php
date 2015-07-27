@@ -43,6 +43,7 @@
                 <td class="join">
                 @if ($server->status == 'Online')
                     <a href="ysflight://{{ $server->ip }}"><img src="img/ys2.png" title="click to connect this server"></a>
+                    Ver. {{ $server->game->version }}
                 @endif
                 </td>
                 <td class="name">
@@ -72,11 +73,12 @@
                 </td>
                 <td class="players">
                 @if ($server->status == 'Online')
+                    <?php $maxplayers = 10; ?>
                     <div class="progress">
-                        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="{{ $server->game->players->notflying }}" aria-valuemin="0" aria-valuemax="20" style="width: {{ min($server->game->players->notflying/20, 1) * 100 }}%;">
+                        <div class="progress-bar progress-bar-default" role="progressbar" aria-valuenow="{{ $server->game->players->notflying }}" aria-valuemin="0" aria-valuemax="{{ $maxplayers }}" style="width: {{ min($server->game->players->notflying/$maxplayers, 1) * 100 }}%;">
                             {{ $server->game->players->notflying }}
                         </div>
-                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ $server->game->players->flying }}" aria-valuemin="0" aria-valuemax="20" style="width: {{ min($server->game->players->flying/20, 1) * 100 }}%;">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ $server->game->players->flying }}" aria-valuemin="0" aria-valuemax="{{ $maxplayers }}" style="width: {{ min($server->game->players->flying/$maxplayers, 1) * 100 }}%;">
                             {{ $server->game->players->flying }}
                         </div>
                     </div>

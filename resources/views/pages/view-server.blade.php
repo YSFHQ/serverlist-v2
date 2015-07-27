@@ -14,14 +14,6 @@
 
         <table class="table">
             <caption>Server Info</caption>
-            {{-- <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-            </tr>
-            </thead> --}}
             <tbody>
                 <tr>
                     <th scope="row">IP address</th>

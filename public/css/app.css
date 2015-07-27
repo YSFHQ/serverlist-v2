@@ -5995,31 +5995,30 @@ button.close {
   margin-left: 2em; }
 
 #server-list td.join {
-  width: 3%;
-  text-align: center; }
+  min-width: 125px; }
 
 #server-list td.name {
-  width: 25%; }
+  min-width: 150px; }
   #server-list td.name form {
     float: right; }
 
 #server-list td.ip {
-  width: 12%; }
+  min-width: 100px; }
 
 #server-list td.map {
-  width: 12%; }
+  min-width: 100px; }
 
 #server-list td.players {
-  width: 20%; }
+  min-width: 150px; }
 
 #server-list td.weather {
-  width: 7%; }
+  min-width: 70px; }
 
 #server-list td.options {
-  width: 14%; }
+  min-width: 150px; }
 
 #server-list td.clock {
-  width: 3%; }
+  min-width: 30px; }
 
 #server-list div.progress {
   margin-bottom: 0; }
