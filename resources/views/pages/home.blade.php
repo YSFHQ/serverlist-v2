@@ -66,7 +66,14 @@
                 </td>
                 <td class="map">
                 @if ($server->status == 'Online')
-                    <a href="http://marcjeanmougin.free.fr/ys_servers/index.php?page=mapToLink.php&amp;map={{ $server->game->map }}">{{ $server->game->map }}</a>
+                    <?php
+                    $maplink = $server->mapLink();
+                    ?>
+                    @if ($maplink)
+                    <a href="{{ $maplink['downloadlink'] }}" title="From pack: {{ $maplink['packname'] }}" target="_blank">{{ $server->game->map }}</a>
+                    @else
+                    {{ $server->game->map }}
+                    @endif
                 @else
                     N/A
                 @endif

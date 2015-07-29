@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
 
 use YSFHQ\Commands\CheckServer;
+use YSFHQ\Commands\UpdateMaps;
 
 class Server extends Model
 {
@@ -63,6 +64,27 @@ class Server extends Model
         return Bus::dispatch(
             new CheckServer($this)
         );
+    }
+
+    public function mapLink()
+    {
+        $map = $this->game->map;
+
+        if (!Cache::has('map_links')) {
+            Bus::dispatch(
+                new UpdateMaps()
+            );
+        }
+
+        $maps = Cache::get('map_links');
+
+        $maps_found = array_filter($maps, function ($var) use ($map) {
+            return $var['mapname']==$map;
+        });
+
+        if (count($maps_found)) return reset($maps_found);
+
+        return null;
     }
 
 }
