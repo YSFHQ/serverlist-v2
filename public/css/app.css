@@ -6026,4 +6026,15 @@ button.close {
 #server-list td.weather img, #server-list td.options img {
   float: left; }
 
+#firechat-wrapper {
+  height: 475px;
+  max-width: 325px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  margin: 50px auto;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0 5px 25px #666; }
+
 /*# sourceMappingURL=app.css.map */
