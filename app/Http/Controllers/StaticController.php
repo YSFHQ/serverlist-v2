@@ -50,14 +50,4 @@ class StaticController extends Controller
         return view('pages/help');
     }
 
-    /**
-     * Display the chat.
-     *
-     * @return Response
-     */
-    public function chat()
-    {
-        return view('pages/chat');
-    }
-
 }

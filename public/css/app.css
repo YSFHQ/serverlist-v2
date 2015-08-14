@@ -5995,30 +5995,13 @@ button.close {
   margin-left: 2em; }
 
 #server-list td.join {
-  min-width: 125px; }
-
-#server-list td.name {
-  min-width: 150px; }
-  #server-list td.name form {
-    float: right; }
-
-#server-list td.ip {
-  min-width: 100px; }
-
-#server-list td.map {
-  min-width: 100px; }
-
-#server-list td.players {
-  min-width: 150px; }
+  width: 25px; }
 
 #server-list td.weather {
-  min-width: 70px; }
+  width: 80px; }
 
 #server-list td.options {
-  min-width: 150px; }
-
-#server-list td.clock {
-  min-width: 30px; }
+  width: 160px; }
 
 #server-list div.progress {
   margin-bottom: 0; }
@@ -6027,12 +6010,9 @@ button.close {
   float: left; }
 
 #firechat-wrapper {
-  height: 475px;
-  max-width: 325px;
   padding: 10px;
   border: 1px solid #ccc;
   background-color: #fff;
-  margin: 50px auto;
   text-align: center;
   border-radius: 4px;
   box-shadow: 0 5px 25px #666; }

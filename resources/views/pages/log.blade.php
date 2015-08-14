@@ -2,7 +2,7 @@
 
 @section('title') Log - @parent @stop
 @section('content')
-<div class="row">
+<div class="row-fluid">
     <div class="page-header">
         <h2>Server List Changes</h2>
     </div>

@@ -22,4 +22,10 @@ $('input[type="checkbox"]#toggleOffline').click(function() {
     $('tr.danger').toggle();
 });
 
+$(function () {
+    $('input[type="checkbox"]#toggleWeather').trigger("click");
+    $('input[type="checkbox"]#toggleOptions').trigger("click");
+    $('input[type="checkbox"]#toggleOffline').trigger("click");
+});
+
 //# sourceMappingURL=app.js.map

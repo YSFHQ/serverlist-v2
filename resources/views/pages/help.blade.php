@@ -2,7 +2,7 @@
 
 @section('title') Help - @parent @stop
 @section('content')
-<div class="row">
+<div class="row-fluid">
     <div class="page-header">
         <h2>Help/FAQ</h2>
     </div>

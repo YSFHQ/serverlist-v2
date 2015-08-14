@@ -8,32 +8,32 @@
 
 #server-list {
     td.join {
-        min-width: 125px;
+        width: 25px;
     }
-    td.name {
-        min-width: 150px;
-        form {
-            float: right;
-        }
-    }
-    td.ip {
-        min-width: 100px;
-    }
-    td.map {
-        min-width: 100px;
-    }
-    td.players {
-        min-width: 150px;
-    }
+    // td.name {
+    //     min-width: 150px;
+    //     form {
+    //         float: right;
+    //     }
+    // }
+    // td.ip {
+    //     min-width: 100px;
+    // }
+    // td.map {
+    //     min-width: 100px;
+    // }
+    // td.players {
+    //     min-width: 150px;
+    // }
     td.weather {
-        min-width: 70px;
+        width: 80px;
     }
     td.options {
-        min-width: 150px;
+        width: 160px;
     }
-    td.clock {
-        min-width: 30px;
-    }
+    // td.clock {
+    //     min-width: 30px;
+    // }
     div.progress {
         margin-bottom: 0;
     }
@@ -43,12 +43,9 @@
 }
 
 #firechat-wrapper {
-    height: 475px;
-    max-width: 325px;
     padding: 10px;
     border: 1px solid #ccc;
     background-color: #fff;
-    margin: 50px auto;
     text-align: center;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;

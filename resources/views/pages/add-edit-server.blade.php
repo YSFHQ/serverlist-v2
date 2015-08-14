@@ -3,7 +3,7 @@
 @section('title') {{ isset($server) ? 'Edit' : 'Add' }} Server - @parent @stop
 @section('content')
 
-<div class="row">
+<div class="row-fluid">
     <div class="col-md-6 col-md-offset-3">
 
     @if (isset($server))

@@ -18,4 +18,3 @@ Route::get('/map', ['uses' => 'StaticController@map', 'as' => 'map']);
 Route::get('/stats', ['uses' => 'StaticController@stats', 'as' => 'stats']);
 Route::get('/log', ['uses' => 'StaticController@log', 'as' => 'log']);
 Route::get('/help', ['uses' => 'StaticController@help', 'as' => 'help']);
-Route::get('/chat', ['uses' => 'StaticController@chat', 'as' => 'chat']);

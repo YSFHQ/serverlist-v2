@@ -2,7 +2,7 @@
 
 @section('title') Stats - @parent @stop
 @section('content')
-<div class="row">
+<div class="row-fluid">
     <div class="page-header">
         <h2>Server Stats</h2>
     </div>
