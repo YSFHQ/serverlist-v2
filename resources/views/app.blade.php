@@ -38,6 +38,11 @@
     @include('partials.nav')
 
     <div class="container-fluid">
+        @if (env('ALERT_MESSAGE'))
+        <div class="alert alert-info" role="alert">
+            {{ env('ALERT_MESSAGE') }}
+        </div>
+        @endif
         @if (session('success'))
         <div class="alert alert-success" role="alert">
             {{ session('success') }}
