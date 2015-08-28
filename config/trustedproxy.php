@@ -14,7 +14,7 @@ return [
      * of your proxy (e.g. if using Rackspace balancers).
      */
     'proxies' => [
-        '103.21.244.0/22'
+        '103.21.244.0/22',
         '103.22.200.0/22',
         '103.31.4.0/22',
         '104.16.0.0/12',
