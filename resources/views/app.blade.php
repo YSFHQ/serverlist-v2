@@ -10,7 +10,7 @@
     <meta name="author" content="YSFlight Headquarters">
     <meta name="description" content="Server list of YSFlight servers">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -32,7 +32,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{{ asset('assets/ico/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ secure_asset('assets/ico/favicon.ico') }}">
 </head>
 <body>
     @include('partials.nav')
@@ -61,6 +61,6 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ secure_asset('js/app.js') }}"></script>
 </body>
 </html>
