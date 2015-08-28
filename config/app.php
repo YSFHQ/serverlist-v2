@@ -142,6 +142,7 @@ return [
          * Vendor Service Providers...
          */
         Torann\GeoIP\GeoIPServiceProvider::class,
+        Fideloper\Proxy\TrustedProxyServiceProvider::class,
 
         /*
          * Application Service Providers...
