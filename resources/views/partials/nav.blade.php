@@ -8,13 +8,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('index') }}">YSFlight Server List</a>
+            <a class="navbar-brand" href="{{ route('index') }}/">YSFlight Server List</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="{{ (Request::is('/') ? 'active' : '') }}">
-                    <a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a>
+                    <a href="{{ route('index') }}/"><i class="fa fa-home"></i> Home</a>
                 </li>
                 <li class="{{ (Request::is('map') ? 'active' : '') }} disabled">
                     <a href="{{ route('map') }}">Map</a>
