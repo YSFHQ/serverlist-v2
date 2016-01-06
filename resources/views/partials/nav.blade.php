@@ -16,7 +16,7 @@
                 <li class="{{ (Request::is('/') ? 'active' : '') }}">
                     <a href="{{ route('index') }}/"><i class="fa fa-home"></i> Home</a>
                 </li>
-                <li class="{{ (Request::is('map') ? 'active' : '') }} disabled">
+                <!--<li class="{{ (Request::is('map') ? 'active' : '') }} disabled">
                     <a href="{{ route('map') }}">Map</a>
                 </li>
                 <li class="{{ (Request::is('stats') ? 'active' : '') }} disabled">
@@ -27,7 +27,7 @@
                 </li>
                 <li class="{{ (Request::is('help') ? 'active' : '') }} disabled">
                     <a href="{{ route('help') }}">Help</a>
-                </li>
+                </li>-->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
