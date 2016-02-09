@@ -16,19 +16,19 @@
 
         <div class="checkbox">
             <label>
-                <input type="checkbox" id="toggleMap"> Map
+                <input type="checkbox" id="toggleMap" checked> Map
             </label>
             <label>
-                <input type="checkbox" id="togglePlayers"> Players
+                <input type="checkbox" id="togglePlayers" checked> Players
             </label>
             <label>
-                <input type="checkbox" id="toggleWeather"> Weather
+                <input type="checkbox" id="toggleWeather" checked> Weather
             </label>
             <label>
-                <input type="checkbox" id="toggleOptions"> Options
+                <input type="checkbox" id="toggleOptions" checked> Options
             </label>
             <label>
-                <input type="checkbox" id="toggleOffline"> <span class="text-danger">Offline</span>
+                <input type="checkbox" id="toggleOffline" checked> <span class="text-danger">Offline</span>
             </label>
         </div>
 
