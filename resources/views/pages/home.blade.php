@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title') Home - @parent @stop
+@section('title') Home - @parent
 @section('content')
 <div class="row-fluid">
 
