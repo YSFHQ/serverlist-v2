@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title') Map - @parent @stop
+@section('title') Map - @parent
 @section('content')
 <div class="row-fluid">
     <div class="page-header">

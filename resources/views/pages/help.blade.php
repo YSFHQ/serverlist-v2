@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title') Help - @parent @stop
+@section('title') Help - @parent
 @section('content')
 <div class="row-fluid">
     <div class="page-header">

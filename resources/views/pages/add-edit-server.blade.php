@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title') {{ isset($server) ? 'Edit' : 'Add' }} Server - @parent @stop
+@section('title') {{ isset($server) ? 'Edit' : 'Add' }} Server - @parent
 @section('content')
 
 <div class="row-fluid">

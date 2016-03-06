@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title') Log - @parent @stop
+@section('title') Log - @parent
 @section('content')
 <div class="row-fluid">
     <div class="page-header">
