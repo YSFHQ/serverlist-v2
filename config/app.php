@@ -141,6 +141,7 @@ return [
         /*
          * Vendor Service Providers...
          */
+        Barryvdh\Cors\ServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
 
