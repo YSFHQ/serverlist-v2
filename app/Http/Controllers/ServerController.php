@@ -26,6 +26,11 @@ class ServerController extends Controller
                 $server->checkServer();
             }
         }
+        if ($request->input('json')) {
+            return response()->json([
+                'servers' => Server::all()
+            ]);
+        }
         return view('pages.home', [
             'servers' => Server::all(),
             'location' => GeoIP::getLocation(gethostbyname($request->ip()))
@@ -69,6 +74,11 @@ class ServerController extends Controller
     public function show(Request $request, $id)
     {
         try {
+            if ($request->input('json')) {
+                return response()->json([
+                    'server' => Server::findOrFail($id)
+                ]);
+            }
             return view('pages.view-server', ['server' => Server::findOrFail($id)]);
         } catch (ModelNotFoundException $e) {
             return redirect()->route('index')->with('error', 'Server not found.');

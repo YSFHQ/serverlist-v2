@@ -18,6 +18,13 @@ class Server extends Model
      */
     protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['status', 'game'];
+
     public function distance($location, $unit = "M") {
         $lat1 = $this->latitude;
         $lon1 = $this->longitude;
