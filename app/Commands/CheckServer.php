@@ -5,11 +5,10 @@ namespace YSFHQ\Commands;
 use Torann\GeoIP\GeoIPFacade as GeoIP;
 
 use YSFHQ\Commands\Command;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Cache;
 use YSFHQ\Domains\Server;
 
-class CheckServer extends Command implements SelfHandling
+class CheckServer extends Command
 {
     /**
      * Create a new command instance.

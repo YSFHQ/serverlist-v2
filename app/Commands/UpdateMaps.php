@@ -6,9 +6,8 @@ use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
 use YSFHQ\Commands\Command;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class UpdateMaps extends Command implements SelfHandling
+class UpdateMaps extends Command
 {
     /**
      * Create a new command instance.
