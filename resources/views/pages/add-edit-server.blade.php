@@ -10,6 +10,9 @@
     {!! Form::model($server, ['route' => ['server.update', $server->id], 'method' => 'put']) !!}
     @else
     {!! Form::open(['route' => 'server.store']) !!}
+        <div class="alert alert-warning" role="alert">
+            NOTE: Your server must be online and unlocked in order to add it.
+        </div>
     @endif
         <div class="form-group">
             {!! Form::label('name', 'Server name') !!}

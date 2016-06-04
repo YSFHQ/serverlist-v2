@@ -21,18 +21,20 @@ class ServerController extends Controller
      */
     public function index(Request $request)
     {
+        $servers = [];
         foreach (Server::all() as $server) {
-            if (!Cache::has($server->ip.':'.$server->port)) {
-                $server->checkServer();
+            if (Cache::has($server->ip.':'.$server->port)) {
+                $servers[] = $server;
             }
         }
+        $servers = collect($servers);
         if ($request->input('json')) {
             return response()->json([
-                'servers' => Server::all()
+                'servers' => $servers
             ]);
         }
         return view('pages.home', [
-            'servers' => Server::all(),
+            'servers' => $servers,
             'location' => GeoIP::getLocation(gethostbyname($request->ip()))
         ]);
     }
@@ -62,6 +64,10 @@ class ServerController extends Controller
         $input['longitude'] = $location['lon'];
         $server = Server::firstOrCreate($input);
         $server->checkServer();
+        if ($server->status != 'Online') {
+            $server->delete();
+            return back()->withInput()->with('error', 'Could not connect to server. Please make sure it is online and unlocked.');
+        }
         return redirect()->route('server.show', ['id' => $server->id])->with('success', 'Server created.');
     }
 
