@@ -59,8 +59,11 @@ class ServerController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
+        if (Server::where('ip', $input['ip'])->where('port', $input['port'])->count()) {
+            return back()->withInput()->with('error', 'Could not add server, another exists with the same IP address and port.');
+        }
         $location = GeoIP::getLocation(gethostbyname($input['ip']));
-        $input['country'] = $location['isoCode'];
+        $input['country'] = $location['iso_code'];
         $input['latitude'] = $location['lat'];
         $input['longitude'] = $location['lon'];
         $server = Server::firstOrCreate($input);
@@ -141,7 +144,7 @@ class ServerController extends Controller
         if (gethostbyname($server->ip)==$request->ip()) {
             $input = $request->except('_token');
             $location = GeoIP::getLocation(gethostbyname($input['ip']));
-            $input['country'] = $location['isoCode'];
+            $input['country'] = $location['iso_code'];
             $input['latitude'] = $location['lat'];
             $input['longitude'] = $location['lon'];
             if ($server->update($input)) {
