@@ -2,10 +2,7 @@
 
 namespace YSFHQ\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use YSFHQ\Http\Requests;
-use YSFHQ\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class StaticController extends Controller
 {
@@ -17,7 +14,7 @@ class StaticController extends Controller
      */
     public function map()
     {
-        return view('pages/map');
+        return view('pages/map', ['title' => 'Map']);
     }
 
     /**
@@ -27,7 +24,7 @@ class StaticController extends Controller
      */
     public function stats()
     {
-        return view('pages/stats');
+        return view('pages/stats', ['title' => 'Stats']);
     }
 
     /**
@@ -37,7 +34,7 @@ class StaticController extends Controller
      */
     public function log()
     {
-        return view('pages/log');
+        return view('pages/log', ['title' => 'Log']);
     }
 
     /**
@@ -47,7 +44,7 @@ class StaticController extends Controller
      */
     public function help()
     {
-        return view('pages/help');
+        return view('pages/help', ['title' => 'Help']);
     }
 
 }

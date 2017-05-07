@@ -4,6 +4,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application. This value is used when the
+    | framework needs to place the application's name in a notification or
+    | any other location as required by the application or its packages.
+    */
+
+    'name' => env('APP_NAME', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |
@@ -38,7 +50,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +102,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -107,7 +119,9 @@ return [
     |
     */
 
-    'log' => 'single',
+    'log' => env('APP_LOG', 'single'),
+
+    'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,6 +152,7 @@ return [
         Illuminate\Hashing\HashServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -149,8 +164,9 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Vendor Service Providers...
+         * Package Service Providers...
          */
+        Laravel\Tinker\TinkerServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Torann\GeoIP\GeoIPServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
@@ -159,6 +175,8 @@ return [
          * Application Service Providers...
          */
         YSFHQ\Providers\AppServiceProvider::class,
+        YSFHQ\Providers\AuthServiceProvider::class,
+        // YSFHQ\Providers\BroadcastServiceProvider::class,
         YSFHQ\Providers\EventServiceProvider::class,
         YSFHQ\Providers\RouteServiceProvider::class,
 
@@ -181,6 +199,7 @@ return [
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
         'Blade'     => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus'       => Illuminate\Support\Facades\Bus::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
         'Config'    => Illuminate\Support\Facades\Config::class,
@@ -198,6 +217,7 @@ return [
         'Lang'      => Illuminate\Support\Facades\Lang::class,
         'Log'       => Illuminate\Support\Facades\Log::class,
         'Mail'      => Illuminate\Support\Facades\Mail::class,
+        'Notification' => Illuminate\Support\Facades\Notification::class,
         'Password'  => Illuminate\Support\Facades\Password::class,
         'Queue'     => Illuminate\Support\Facades\Queue::class,
         'Redirect'  => Illuminate\Support\Facades\Redirect::class,
@@ -212,7 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'GeoIP'     => Torann\GeoIP\GeoIPFacade::class,
+        'GeoIP'     => Torann\GeoIP\Facades\GeoIP::class,
 
     ],
 

@@ -4,12 +4,11 @@ namespace YSFHQ\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
-use Torann\GeoIP\GeoIPFacade as GeoIP;
+use Torann\GeoIP\Facades\GeoIP;
 
-use YSFHQ\Http\Requests;
-use YSFHQ\Http\Controllers\Controller;
 use YSFHQ\Domains\Server;
 
 class ServerController extends Controller
@@ -17,6 +16,7 @@ class ServerController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return Response
      */
     public function index(Request $request)
@@ -34,6 +34,7 @@ class ServerController extends Controller
             ]);
         }
         return view('pages.home', [
+            'title' => 'Home',
             'servers' => $servers,
             'location' => GeoIP::getLocation(gethostbyname($request->ip()))
         ]);
@@ -46,7 +47,7 @@ class ServerController extends Controller
      */
     public function create()
     {
-        return view('pages.add-edit-server');
+        return view('pages.add-edit-server', ['title' => 'Add Server']);
     }
 
     /**
@@ -74,27 +75,39 @@ class ServerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param  int $id
      * @return Response
      */
     public function show(Request $request, $id)
     {
+        $error = ['status' => 500, 'message' => 'Unknown error.'];
         try {
+            $server = Server::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            $error = ['status' => 404, 'message' => 'Server not found.'];
+        }
+        if (isset($server)) {
             if ($request->input('json')) {
                 return response()->json([
-                    'server' => Server::findOrFail($id)
+                    'server' => $server
                 ]);
             }
-            return view('pages.view-server', ['server' => Server::findOrFail($id)]);
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('index')->with('error', 'Server not found.');
+            return view('pages.view-server', ['title' => $server->name, 'server' => $server]);
         }
+        if ($request->input('json')) {
+            return response()->setStatusCode($error['code'])->json([
+                'error' => $error['message'],
+            ]);
+        }
+        return redirect()->route('index')->with('error', $error['message']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param  int $id
      * @return Response
      */
     public function edit(Request $request, $id)
@@ -102,7 +115,7 @@ class ServerController extends Controller
         try {
             $server = Server::findOrFail($id);
             if (gethostbyname($server->ip)==$request->ip()) {
-                return view('pages.add-edit-server', ['server' => $server]);
+                return view('pages.add-edit-server', ['title' => 'Edit Server', 'server' => $server]);
             }
             return redirect()->route('index')->with('error', 'You do not have proper permissions to edit the server.');
         } catch (ModelNotFoundException $e) {
@@ -138,7 +151,8 @@ class ServerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Request $request
+     * @param  int $id
      * @return Response
      */
     public function destroy(Request $request, $id)

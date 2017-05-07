@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@section('title') YSFlight Server List @show</title>
+    <title>{{ $title }} | YSFlight Server List</title>
     <meta name="keywords" content="ys, ysfs, ysflight, yspilots, flight, simulator, server, list, YSPS, YSC, YSChat, aircraft, sim">
     <meta name="author" content="YSFlight Headquarters">
     <meta name="description" content="Server list of YSFlight servers">
 
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -32,7 +32,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{{ secure_asset('assets/ico/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/ico/favicon.ico') }}">
 </head>
 <body>
     @include('partials.nav')
@@ -61,6 +61,6 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="{{ secure_asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

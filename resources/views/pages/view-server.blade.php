@@ -1,6 +1,5 @@
 @extends('app')
 
-@section('title') View Server - @parent
 @section('content')
 
 <div class="row-fluid">
@@ -115,5 +114,3 @@
 </div>
 
 @endsection
-
-@stop

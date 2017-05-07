@@ -1,6 +1,5 @@
 @extends('app')
 
-@section('title') Map - @parent
 @section('content')
 <div class="row-fluid">
     <div class="page-header">
@@ -9,5 +8,3 @@
     <h3>Coming Soon</h3>
 </div>
 @endsection
-
-@stop
