@@ -1,28 +1,38 @@
-$('li.disabled a').click(function (event) {
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+require('./bootstrap');
+
+window.Vue = require('vue');
+
+window.$('li.disabled a').click(function (event) {
     event.preventDefault();
 });
 
-$('input[type="checkbox"]#toggleMap').click(function() {
+window.$('input[type="checkbox"]#toggleMap').click(function() {
     $('.map').toggle();
 });
 
-$('input[type="checkbox"]#togglePlayers').click(function() {
+window.$('input[type="checkbox"]#togglePlayers').click(function() {
     $('.players').toggle();
 });
 
-$('input[type="checkbox"]#toggleWeather').click(function() {
+window.$('input[type="checkbox"]#toggleWeather').click(function() {
     $('.weather').toggle();
 });
 
-$('input[type="checkbox"]#toggleOptions').click(function() {
+window.$('input[type="checkbox"]#toggleOptions').click(function() {
     $('.options').toggle();
 });
 
-$('input[type="checkbox"]#toggleOffline').click(function() {
+window.$('input[type="checkbox"]#toggleOffline').click(function() {
     $('tr.danger').toggle();
 });
 
-$(function () {
+window.$(function () {
     $('input[type="checkbox"]#toggleWeather').trigger("click");
     $('input[type="checkbox"]#toggleOptions').trigger("click");
     $('input[type="checkbox"]#toggleOffline').trigger("click");

@@ -14,7 +14,7 @@ class StaticController extends Controller
      */
     public function map()
     {
-        return view('pages/map', ['title' => 'Map']);
+        return view('map', ['title' => 'Map']);
     }
 
     /**
@@ -24,7 +24,7 @@ class StaticController extends Controller
      */
     public function stats()
     {
-        return view('pages/stats', ['title' => 'Stats']);
+        return view('stats', ['title' => 'Stats']);
     }
 
     /**
@@ -34,7 +34,7 @@ class StaticController extends Controller
      */
     public function log()
     {
-        return view('pages/log', ['title' => 'Log']);
+        return view('log', ['title' => 'Log']);
     }
 
     /**
@@ -44,7 +44,7 @@ class StaticController extends Controller
      */
     public function help()
     {
-        return view('pages/help', ['title' => 'Help']);
+        return view('help', ['title' => 'Help']);
     }
 
 }

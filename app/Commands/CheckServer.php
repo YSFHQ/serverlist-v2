@@ -2,9 +2,8 @@
 
 namespace YSFHQ\Commands;
 
-use Torann\GeoIP\GeoIPFacade as GeoIP;
+use Torann\GeoIP\Facades\GeoIP;
 
-use YSFHQ\Commands\Command;
 use Illuminate\Support\Facades\Cache;
 use YSFHQ\Domains\Server;
 
@@ -13,7 +12,7 @@ class CheckServer extends Command
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param Server $server
      */
     public function __construct(Server $server)
     {
@@ -22,8 +21,6 @@ class CheckServer extends Command
 
     /**
      * Execute the command.
-     *
-     * @return void
      */
     public function handle()
     {

@@ -33,7 +33,7 @@ class ServerController extends Controller
                 'servers' => $servers
             ]);
         }
-        return view('pages.home', [
+        return view('home', [
             'title' => 'Home',
             'servers' => $servers,
             'location' => GeoIP::getLocation(gethostbyname($request->ip()))
@@ -47,7 +47,7 @@ class ServerController extends Controller
      */
     public function create()
     {
-        return view('pages.add-edit-server', ['title' => 'Add Server']);
+        return view('add-edit-server', ['title' => 'Add Server']);
     }
 
     /**
@@ -98,7 +98,7 @@ class ServerController extends Controller
                     'server' => $server
                 ]);
             }
-            return view('pages.view-server', ['title' => $server->name, 'server' => $server]);
+            return view('view-server', ['title' => $server->name, 'server' => $server]);
         }
         if ($request->input('json')) {
             return response()->setStatusCode($error['code'])->json([
@@ -120,7 +120,7 @@ class ServerController extends Controller
         try {
             $server = Server::findOrFail($id);
             if (gethostbyname($server->ip)==$request->ip()) {
-                return view('pages.add-edit-server', ['title' => 'Edit Server', 'server' => $server]);
+                return view('add-edit-server', ['title' => 'Edit Server', 'server' => $server]);
             }
             return redirect()->route('index')->with('error', 'You do not have proper permissions to edit the server.');
         } catch (ModelNotFoundException $e) {

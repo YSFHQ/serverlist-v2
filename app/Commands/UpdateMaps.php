@@ -5,8 +5,6 @@ namespace YSFHQ\Commands;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
-use YSFHQ\Commands\Command;
-
 class UpdateMaps extends Command
 {
     /**

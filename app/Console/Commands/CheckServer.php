@@ -3,7 +3,6 @@
 namespace YSFHQ\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 
 class CheckServer extends Command
 {
@@ -23,8 +22,6 @@ class CheckServer extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -33,8 +30,6 @@ class CheckServer extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
@@ -42,6 +37,6 @@ class CheckServer extends Command
         passthru('/usr/bin/python2.7 '.base_path().'/ys_proto.py '.$this->argument('ip').' '.$this->argument('port'));
         $output = ob_get_clean();
         $output = json_decode($output);
-        dd($output);
+        print_r($output);
     }
 }
