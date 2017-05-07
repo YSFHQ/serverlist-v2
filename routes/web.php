@@ -1,7 +1,7 @@
 <?php
 
 if (starts_with(env('APP_URL'), 'https://')) {
-    URL::forceSchema('https');
+    URL::forceScheme('https');
 }
 
 /*
