@@ -64,8 +64,13 @@ class ServerController extends Controller
         $input['latitude'] = $location['lat'];
         $input['longitude'] = $location['lon'];
         $server = Server::firstOrCreate($input);
-        $server->checkServer();
-        if ($server->status != 'Online') {
+        try {
+            $result = $server->checkServer();
+        } catch (\Exception $e) {
+            $server->delete();
+            return back()->withInput()->with('error', 'Could not check server, unhandled error: '.$e->getMessage());
+        }
+        if (!$result || $server->status != 'Online') {
             $server->delete();
             return back()->withInput()->with('error', 'Could not connect to server. Please make sure it is online and unlocked.');
         }

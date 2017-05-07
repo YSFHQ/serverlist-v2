@@ -32,6 +32,10 @@ class CheckServer extends Command
         $output = ob_get_clean();
         $output = json_decode($output);
 
+        if (is_null($output)) {
+            return $output;
+        }
+
         if ($output->userOption==1) {
             $playerNames = 'always show player names';
         } else if ($output->userOption==2) {
