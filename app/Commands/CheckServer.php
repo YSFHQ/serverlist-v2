@@ -89,7 +89,7 @@ class CheckServer extends Command
         Cache::put($this->server->ip.':'.$this->server->port, $result_obj, 5);
 
         $location = GeoIP::getLocation(gethostbyname($this->server->ip));
-        $this->server->country = $location['isoCode'];
+        $this->server->country = $location['iso_code'];
         $this->server->latitude = $location['lat'];
         $this->server->longitude = $location['lon'];
         $this->server->save();
