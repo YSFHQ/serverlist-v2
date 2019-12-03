@@ -2,6 +2,7 @@
 
 namespace YSFHQ\Commands;
 
+use Carbon\Carbon;
 use Torann\GeoIP\Facades\GeoIP;
 
 use Illuminate\Support\Facades\Cache;
@@ -87,6 +88,10 @@ class CheckServer extends Command
         $result_obj = json_decode(json_encode($result));
 
         Cache::put($this->server->ip.':'.$this->server->port, $result_obj, 5);
+
+        if ($result_obj->status === 'Online') {
+            $this->server->last_online = Carbon::now();
+        }
 
         $location = GeoIP::getLocation(gethostbyname($this->server->ip));
         $this->server->country = $location['iso_code'];

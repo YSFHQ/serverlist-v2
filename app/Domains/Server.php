@@ -3,8 +3,11 @@
 namespace YSFHQ\Domains;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\{
+    Bus,
+    Cache,
+    Log
+};
 
 use YSFHQ\Commands\CheckServer;
 use YSFHQ\Commands\UpdateMaps;
@@ -16,7 +19,16 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude'];
+    protected $fillable = ['name', 'owner', 'website', 'ip', 'port', 'country', 'latitude', 'longitude', 'last_online'];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'last_online' => 'datetime',
+    ];
 
     /**
      * The accessors to append to the model's array form.
@@ -78,12 +90,16 @@ class Server extends Model
         $map = $this->game->map;
 
         if (!Cache::has('map_links')) {
-            Bus::dispatch(
-                new UpdateMaps()
-            );
+            try {
+                Bus::dispatch(
+                    new UpdateMaps()
+                );
+            } catch (\Exception $e) {
+                Log::error($e);
+            }
         }
 
-        $maps = Cache::get('map_links');
+        $maps = Cache::get('map_links', []);
 
         $maps_found = array_filter($maps, function ($var) use ($map) {
             return $var['mapname']==$map;

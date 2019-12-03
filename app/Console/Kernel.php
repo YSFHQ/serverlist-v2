@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \YSFHQ\Console\Commands\CheckServer::class,
         \YSFHQ\Console\Commands\CheckServers::class,
+        \YSFHQ\Console\Commands\PruneServers::class,
     ];
 
     /**
