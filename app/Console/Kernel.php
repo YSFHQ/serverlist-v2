@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('ys:checkservers')->everyFiveMinutes();
+        $schedule->command('ys:pruneservers')->daily();
     }
 
     /**

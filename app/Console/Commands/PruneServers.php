@@ -42,7 +42,7 @@ class PruneServers extends Command
                 $server->delete();
                 break;
             }
-            if (!$server->last_online || $server->last_online->diffInDays(Carbon::now()) > 90) {
+            if (!$server->last_online || $server->last_online->diffInDays(Carbon::now()) > 30) {
                 $this->info("Deleting server {$server->name} ({$server->ip}) as it was last online {$server->last_online} which is more than 90 days ago");
                 $server->delete();
                 break;
