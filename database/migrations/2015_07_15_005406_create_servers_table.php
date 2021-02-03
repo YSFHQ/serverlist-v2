@@ -16,7 +16,7 @@ class CreateServersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('owner');
-            $table->string('website');
+            $table->string('website')->nullable();
             $table->string('ip');
             $table->integer('port')->default(7915);
             $table->string('country');
