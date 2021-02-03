@@ -172,7 +172,7 @@ class Apps:
             self.server.status = "locked"
             return
         logger.info("connected")
-        while self.connected and self.packets < 150: # we exit after 15 packets
+        while self.connected and self.packets < 15: # we exit after 15 packets
             (size, type,buffer) = self.receive()
             self.packets += 1
             self.server.status = "online"
