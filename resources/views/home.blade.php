@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 
-    <div class="col col-lg-8">
+    <div class="col-lg-8">
         <h3>YSFlight Multiplayer Servers</h3>
 
         <p>
