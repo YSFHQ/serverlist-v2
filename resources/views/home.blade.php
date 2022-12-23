@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 
-    <div class="col col-md-8">
+    <div class="col col-lg-8">
         <h3>YSFlight Multiplayer Servers</h3>
 
         <p>
@@ -140,7 +140,7 @@
     </div>
     <div class="col">
         <h4>YSFHQ Discord</h4>
-        <iframe src="https://discord.com/widget?id=199291260417081344&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <iframe src="https://discord.com/widget?id=199291260417081344&theme=dark" width="100%" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
     </div>
 
 </div>

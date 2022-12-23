@@ -49,6 +49,7 @@
             {!! Form::text('longitude', null, ['class' => 'form-control', 'placeholder' => '-83.01234']) !!}
             </div>
         </div> --}}
+        @csrf
         {!! Form::submit((isset($server) ? 'Edit' : 'Add').' Server', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}
 
