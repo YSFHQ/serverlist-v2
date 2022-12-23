@@ -1,11 +1,11 @@
 <?php
 
-namespace YSFHQ\Console\Commands;
+namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-use YSFHQ\Domains\Server;
+use App\Models\Server;
 
 class PruneServers extends Command
 {

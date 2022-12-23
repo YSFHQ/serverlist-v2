@@ -1,6 +1,6 @@
 <?php
 
-namespace YSFHQ\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 
 use Torann\GeoIP\Facades\GeoIP;
 
-use YSFHQ\Domains\Server;
+use App\Models\Server;
 
 class ServerController extends Controller
 {
@@ -21,13 +21,12 @@ class ServerController extends Controller
      */
     public function index(Request $request)
     {
-        $servers = [];
-        foreach (Server::all() as $server) {
-            if (Cache::has($server->ip.':'.$server->port)) {
-                $servers[] = $server;
+        $servers = Server::all();
+        foreach ($servers as $server) {
+            if (!$server->game) {
+                $server->checkServer();
             }
         }
-        $servers = collect($servers);
         if ($request->input('json')) {
             return response()->json([
                 'servers' => $servers
@@ -95,7 +94,11 @@ class ServerController extends Controller
         } catch (ModelNotFoundException $e) {
             $error = ['status' => 404, 'message' => 'Server not found.'];
         }
+
         if (isset($server)) {
+            if (!$server->game) {
+                $server->checkServer();
+            }
             if ($request->input('json')) {
                 return response()->json([
                     'server' => $server

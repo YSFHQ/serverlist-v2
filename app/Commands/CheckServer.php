@@ -1,14 +1,14 @@
 <?php
 
-namespace YSFHQ\Commands;
+namespace App\Commands;
 
 use Carbon\Carbon;
 use Torann\GeoIP\Facades\GeoIP;
 
 use Illuminate\Support\Facades\Cache;
-use YSFHQ\Domains\Server;
+use App\Models\Server;
 
-class CheckServer extends Command
+class CheckServer
 {
     /**
      * Create a new command instance.
@@ -87,7 +87,7 @@ class CheckServer extends Command
 
         $result_obj = json_decode(json_encode($result));
 
-        Cache::put($this->server->ip.':'.$this->server->port, $result_obj, 5);
+        Cache::put($this->server->ip.':'.$this->server->port, $result_obj, Carbon::now()->addMinutes(5));
 
         if ($result_obj->status === 'Online') {
             $this->server->last_online = Carbon::now();

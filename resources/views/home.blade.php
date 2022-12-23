@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row-fluid">
+<div class="row">
 
-    <div class="col-md-8">
+    <div class="col col-md-8">
         <h3>YSFlight Multiplayer Servers</h3>
 
         <p>
@@ -47,15 +47,17 @@
                 </thead>
                 <tbody>
                 @foreach ($servers as $server)
-                    <tr class="{{ $server->status == 'Online' ? 'success' : 'danger' }}">
+                    <tr class="{{ $server->status == 'Online' ? 'table-success' : 'table-danger' }}">
                         <td class="join">
                         @if ($server->status == 'Online')
-                            <a href="ysflight://{{ $server->ip }}"><img src="img/ys2.png" title="click to connect this server"></a>
+                            <a href="ysflight://{{ $server->ip }}"><img src="{{ Vite::asset('resources/images/ys2.png') }}" title="click to connect this server"></a>
+                        @else
+                            Offline
                         @endif
                         </td>
                         <td class="name">
-                            <a href="{{ route('map', ['id' => $server->id]) }}"><img src="img/flags/{{ strtolower($server->country) }}.gif" title="{{ strtoupper($server->country) }} - Distance to the server: {{ round($server->distance($location), 1) }}mi"></a>
-                            <a href="{{ route('server.show', ['id' => $server->id]) }}" title="owner: {{ $server->owner }} | YS version: {{ $server->status == 'Online' ? $server->game->version : 'N/A' }}">{{ $server->name }}</a>
+                            <a href="{{ route('map', ['server' => $server->id]) }}"><img src="{{ Vite::asset('resources/images/flags/'.strtolower($server->country).'.gif') }}" title="{{ strtoupper($server->country) }} - Distance to the server: {{ round($server->distance($location), 1) }}mi"></a>
+                            <a href="{{ route('server.show', ['server' => $server->id]) }}" title="owner: {{ $server->owner }} | YS version: {{ $server->status == 'Online' ? $server->game->version : 'N/A' }}">{{ $server->name }}</a>
                             @if (gethostbyname($server->ip)==Request::ip())
                                 {!! Form::open(['route' => ['server.destroy', $server->id], 'method' => 'delete']) !!}
                                 <div class="btn-group" role="group">
@@ -107,7 +109,7 @@
                         </td>
                         <td class="weather">
                         @if ($server->status == 'Online')
-                            <img src="img/{{ $server->game->weather->is_day ? 'day' : 'night' }}.png" title="{{ $server->game->weather->is_day ? 'day' : 'night' }}">
+                            <img src="{{ Vite::asset('resources/images/'.($server->game->weather->is_day ? 'day' : 'night').'.png') }}" title="{{ $server->game->weather->is_day ? 'day' : 'night' }}">
                             <img src="{{ $server->game->weather->weather_img }}" title="visibility: {{ $server->game->weather->visib }}m | wind direction: {{ $server->game->weather->wind_dir }} | wind speed: {{ $server->game->weather->wind_speed }}m/s | windx={{ $server->game->weather->wind_x }} | windy={{ $server->game->weather->wind_x }} | windz={{ $server->game->weather->wind_z }}" />
                         @else
                             N/A
@@ -115,19 +117,19 @@
                         </td>
                         <td class="options">
                         @if ($server->status == 'Online')
-                            <img src="img/blackout_{{ $server->game->options->blackout ? 'on' : 'off' }}.png" title="blackout_{{ $server->game->options->blackout ? 'on' : 'off' }}">
-                            <img src="img/collisions_{{ $server->game->options->collisions ? 'on' : 'off' }}.png" title="collisions_{{ $server->game->options->collisions ? 'on' : 'off' }}">
-                            <img src="img/landev_{{ $server->game->options->landev ? 'on' : 'off' }}.png" title="landev_{{ $server->game->options->landev ? 'on' : 'off' }}">
-                            <img src="img/missiles_{{ $server->game->options->missiles ? 'on' : 'off' }}.png" title="missiles_{{ $server->game->options->missiles ? 'on' : 'off' }}">
-                            <img src="img/weapon_{{ $server->game->options->weapon ? 'on' : 'off' }}.png" title="weapon_{{ $server->game->options->weapon ? 'on' : 'off' }}">
-                            <img src="img/radar.png" title="{{ $server->game->options->radar }}">
-                            <img src="img/f3_{{ $server->game->options->f3 ? 'on' : 'off' }}.png" title="F3 view {{ $server->game->options->f3 ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/blackout_'.($server->game->options->blackout ? 'on' : 'off').'.png') }}" title="blackout {{ $server->game->options->blackout ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/collisions_'.($server->game->options->collisions ? 'on' : 'off').'.png') }}" title="collisions {{ $server->game->options->collisions ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/landev_'.($server->game->options->landev ? 'on' : 'off').'.png') }}" title="land everywhere {{ $server->game->options->landev ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/missiles_'.($server->game->options->missiles ? 'on' : 'off').'.png') }}" title="missiles {{ $server->game->options->missiles ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/weapon_'.($server->game->options->weapon ? 'on' : 'off').'.png') }}" title="weapons {{ $server->game->options->weapon ? 'on' : 'off' }}">
+                            <img src="{{ Vite::asset('resources/images/radar.png') }}" title="{{ $server->game->options->radar }}">
+                            <img src="{{ Vite::asset('resources/images/f3_'.($server->game->options->f3 ? 'on' : 'off').'.png') }}" title="F3 view {{ $server->game->options->f3 ? 'on' : 'off' }}">
                         @else
                             N/A
                         @endif
                         </td>
                         {{-- <td class="clock">
-                            <img src="img/clock.png" title="information updated: {{ $server->lastupdated() }}">
+                            <img src="{{ Vite::asset('resources/images/clock.png') }}" title="information updated: {{ $server->lastupdated() }}">
                         </td> --}}
                     </tr>
                 @endforeach
@@ -136,10 +138,9 @@
         </div>
 
     </div>
-    <div class="col-md-4">
-        <h4>YSFlight Chat</h4>
-        <p>Please abide by the <a href="http://forum.ysfhq.com/viewtopic.php?f=167&amp;t=6071" target="_blank">YSFHQ rules</a>.</p>
-        @include('partials.chat')
+    <div class="col">
+        <h4>YSFHQ Discord</h4>
+        <iframe src="https://discord.com/widget?id=199291260417081344&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
     </div>
 
 </div>

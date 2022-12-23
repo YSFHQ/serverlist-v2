@@ -1,6 +1,6 @@
 <?php
 
-namespace YSFHQ\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 

@@ -1,8 +1,8 @@
 <?php
 
-if (starts_with(env('APP_URL'), 'https://')) {
-    URL::forceScheme('https');
-}
+use App\Http\Controllers\ServerController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +15,16 @@ if (starts_with(env('APP_URL'), 'https://')) {
 |
 */
 
-Route::resource('server', 'ServerController');
+if (str_starts_with(env('APP_URL'), 'https://')) {
+    URL::forceScheme('https');
+}
 
-Route::get('/', ['uses' => 'ServerController@index', 'as' => 'index']);
-Route::get('/map', ['uses' => 'StaticController@map', 'as' => 'map']);
-Route::get('/stats', ['uses' => 'StaticController@stats', 'as' => 'stats']);
-Route::get('/log', ['uses' => 'StaticController@log', 'as' => 'log']);
-Route::get('/help', ['uses' => 'StaticController@help', 'as' => 'help']);
+Route::resource('server', ServerController::class);
+
+Route::controller(ServerController::class)->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/map', 'map')->name('map');
+    Route::get('/stats', 'stats')->name('stats');
+    Route::get('/log', 'log')->name('log');
+    Route::get('/help', 'help')->name('help');
+});

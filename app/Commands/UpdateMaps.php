@@ -1,11 +1,11 @@
 <?php
 
-namespace YSFHQ\Commands;
+namespace App\Commands;
 
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
-class UpdateMaps extends Command
+class UpdateMaps
 {
     /**
      * Create a new command instance.

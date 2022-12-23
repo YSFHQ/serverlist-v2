@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row mt-3">
     <div class="col-md-6 col-md-offset-3">
 
         <h2>{{ $server->name }}</h2>

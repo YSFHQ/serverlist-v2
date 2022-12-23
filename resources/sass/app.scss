@@ -1,0 +1,41 @@
+.checkbox {
+    label + label {
+        margin-left: 2em;
+    }
+}
+
+#server-list {
+    td.join {
+        width: 25px;
+    }
+    // td.name {
+    //     min-width: 150px;
+    //     form {
+    //         float: right;
+    //     }
+    // }
+    // td.ip {
+    //     min-width: 100px;
+    // }
+    // td.map {
+    //     min-width: 100px;
+    // }
+    // td.players {
+    //     min-width: 150px;
+    // }
+    td.weather {
+        width: 80px;
+    }
+    td.options {
+        width: 160px;
+    }
+    // td.clock {
+    //     min-width: 30px;
+    // }
+    div.progress {
+        margin-bottom: 0;
+    }
+    td.weather img, td.options img {
+        float: left;
+    }
+}

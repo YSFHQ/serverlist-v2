@@ -1,38 +1,17 @@
-<nav class="navbar navbar-default navbar-inverse navbar-static-top">
+<nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ route('index') }}">YSFlight Server List</a>
-        </div>
+        <a class="navbar-brand" href="{{ route('index') }}">YSFlight Server List</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="{{ (Request::is('/') ? 'active' : '') }}">
-                    <a href="{{ route('index') }}"><i class="fa fa-home"></i> Home</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{ (Request::is('/') ? 'active' : '') }}" href="{{ route('index') }}">Servers</a>
                 </li>
-                <!--<li class="{{ (Request::is('map') ? 'active' : '') }} disabled">
-                    <a href="{{ route('map') }}">Map</a>
-                </li>
-                <li class="{{ (Request::is('stats') ? 'active' : '') }} disabled">
-                    <a href="{{ route('stats') }}">Stats</a>
-                </li>
-                <li class="{{ (Request::is('log') ? 'active' : '') }} disabled">
-                    <a href="{{ route('log') }}">Log</a>
-                </li>
-                <li class="{{ (Request::is('help') ? 'active' : '') }} disabled">
-                    <a href="{{ route('help') }}">Help</a>
-                </li>-->
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="{{ (Request::is('server/create') ? 'active' : '') }}">
-                    <a href="{{ route('server.create') }}">Add Server</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ (Request::is('server/create') ? 'active' : '') }}" href="{{ route('server.create') }}">Add Server</a>
                 </li>
             </ul>
         </div>
