@@ -56,7 +56,7 @@
                         @endif
                         </td>
                         <td class="name">
-                            <a href="{{ route('map', ['server' => $server->id]) }}"><img src="{{ Vite::asset('resources/images/flags/'.strtolower($server->country).'.gif') }}" title="{{ strtoupper($server->country) }} - Distance to the server: {{ round($server->distance($location), 1) }}mi"></a>
+                            <img src="{{ Vite::asset('resources/images/flags/'.strtolower($server->country).'.gif') }}" title="{{ strtoupper($server->country) }} - Distance to the server: {{ round($server->distance($location), 1) }}mi">
                             <a href="{{ route('server.show', ['server' => $server->id]) }}" title="owner: {{ $server->owner }} | YS version: {{ $server->status == 'Online' ? $server->game->version : 'N/A' }}">{{ $server->name }}</a>
                             @if (gethostbyname($server->ip)==Request::ip())
                                 {!! Form::open(['route' => ['server.destroy', $server->id], 'method' => 'delete']) !!}
