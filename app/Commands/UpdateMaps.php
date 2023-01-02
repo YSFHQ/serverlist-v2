@@ -24,13 +24,14 @@ class UpdateMaps
      */
     public function handle()
     {
-        $doc = json_decode(file_get_contents('https://spreadsheets.google.com/feeds/list/1-yNrS0cw9VQ6Ut6hHnbOlAA_aJNqRPPpaA3B3rwzbWk/od6/public/values?alt=json'), true);
-        $rows = $doc['feed']['entry'];
+        $doc = json_decode(file_get_contents('https://sheets.googleapis.com/v4/spreadsheets/1-yNrS0cw9VQ6Ut6hHnbOlAA_aJNqRPPpaA3B3rwzbWk/values/Sheet1?key='.env('GOOGLE_SHEETS_KEY')), true);
+        $rows = $doc["values"];
+        array_shift($rows); // remove headers
 
         $maps = [];
 
         foreach ($rows as $row) {
-            $maps[] = ['mapname' => $row['gsx$mapname']['$t'], '', 'packname' => $row['gsx$packname']['$t'], 'downloadlink' => $row['gsx$downloadlink']['$t']];
+            $maps[] = ['mapname' => $row[0], '', 'packname' => $row[1], 'downloadlink' => $row[2]];
         }
 
         Cache::put('map_links', $maps, Carbon::now()->addHours(6));
