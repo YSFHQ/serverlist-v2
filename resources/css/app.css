@@ -1,0 +1,23 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+.checkbox label + label {
+    margin-left: 2em;
+}
+
+#server-list td.join {
+    width: 25px;
+}
+#server-list td.weather {
+    width: 80px;
+}
+#server-list td.options {
+    width: 160px;
+}
+#server-list div.progress {
+    margin-bottom: 0;
+}
+#server-list td.weather img, td.options img {
+    float: left;
+}

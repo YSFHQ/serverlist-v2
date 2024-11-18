@@ -6,52 +6,56 @@
     <div class="col-md-6 col-md-offset-3">
 
     @if (isset($server))
-    {!! Form::model($server, ['route' => ['server.update', $server->id], 'method' => 'put']) !!}
+    {{ html()->modelForm($server, 'PUT', '/server/'.$server->id) }}
     @else
-    {!! Form::open(['route' => 'server.store']) !!}
+    {{ html()->form('POST', '/server')->open() }}
         <div class="alert alert-warning" role="alert">
             NOTE: Your server must be online and unlocked in order to add it.
         </div>
     @endif
         <div class="form-group mb-3">
-            {!! Form::label('name', 'Server name') !!}
-            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'The Best Server Ever', 'required' => 'required']) !!}
+            {{ html()->label('Server name', 'name') }}
+            {{ html()->text('name')->class('form-control')->placeholder('The Best Server Ever')->required() }}
         </div>
         <div class="form-group mb-3">
-            {!! Form::label('owner', 'Owner') !!}
-            {!! Form::text('owner', null, ['class' => 'form-control', 'placeholder' => 'YSFHQ Username']) !!}
+            {{ html()->label('Owner', 'owner') }}
+            {{ html()->text('owner')->class('form-control')->placeholder('YSFHQ Username')->required() }}
         </div>
         <div class="form-group mb-3">
-            {!! Form::label('website', 'Website') !!}
-            {!! Form::text('website', null, ['class' => 'form-control', 'placeholder' => 'http://www.ysfhq.com/']) !!}
+            {{ html()->label('Website', 'website') }}
+            {{ html()->text('website')->class('form-control')->placeholder('http://www.ysfhq.com/') }}
         </div>
         <div class="form-group row mb-3">
             <div class="col-md-6">
-            {!! Form::label('ip', 'IP Address (currently '.Request::ip().')') !!}
-            {!! Form::text('ip', (isset($server) ? $server->ip : Request::ip()), ['class' => 'form-control', 'placeholder' => 'NOT 192.168.1.xxx', 'required' => 'required']) !!}
+            {{ html()->label('IP Address (currently '.Request::ip().')', 'ip') }}
+            {{ html()->text('ip', isset($server) ? $server->ip : Request::ip())->class('form-control')->placeholder('NOT 192.168.1.xxx')->required() }}
             </div>
             <div class="col-md-6">
-            {!! Form::label('port', 'Port') !!}
-            {!! Form::text('port', '7915', ['class' => 'form-control', 'placeholder' => '7915', 'required' => 'required']) !!}
+            {{ html()->label('Port', 'port') }}
+            {{ html()->text('port', isset($server) ? $server->port : '7915')->class('form-control')->placeholder('7915')->required() }}
             </div>
         </div>
         {{-- <div class="form-group row mb-3">
             <div class="col-md-4">
-            {!! Form::label('country', 'Country') !!}
-            {!! Form::text('country', null, ['class' => 'form-control', 'placeholder' => 'US', 'required' => 'required']) !!}
+            {{ html()->label('Country', 'country') }}
+            {{ html()->text('country')->class('form-control')->placeholder('US')->required() }}
             </div>
             <div class="col-md-4">
-            {!! Form::label('latitude', 'Latitude') !!}
-            {!! Form::text('latitude', null, ['class' => 'form-control', 'placeholder' => '41.01234']) !!}
+            {{ html()->label('Latitude', 'latitude') }}
+            {{ html()->text('latitude')->class('form-control')->placeholder('41.01234') }}
             </div>
             <div class="col-md-4">
-            {!! Form::label('longitude', 'Longitude') !!}
-            {!! Form::text('longitude', null, ['class' => 'form-control', 'placeholder' => '-83.01234']) !!}
+            {{ html()->label('Longitude', 'longitude') }}
+            {{ html()->text('longitude')->class('form-control')->placeholder('-83.01234') }}
             </div>
         </div> --}}
         @csrf
-        {!! Form::submit((isset($server) ? 'Edit' : 'Add').' Server', ['class' => 'btn btn-primary']) !!}
-    {!! Form::close() !!}
+        {{ html()->submit((isset($server) ? 'Edit' : 'Add').' Server')->class('btn btn-primary') }}
+    @if (isset($server))
+    {{ html()->closeModelForm() }}
+    @else
+    {{ html()->form()->close() }}
+    @endif
 
     </div>
 </div>

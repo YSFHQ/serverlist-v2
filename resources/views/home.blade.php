@@ -9,7 +9,7 @@
         <p>
             <strong>Welcome to the server list!</strong> Click the checkboxes below to toggle the columns shown.
             Hover over the server name to see which version of YSFlight it is using, and click it for more info about the server.
-            Visit <a href="http://forum.ysfhq.com/" target="_blank">YSFlight Headquarters</a> if you need help or want to join the largest YSFlight community.
+            Visit <a href="https://forum.ysfhq.com/" target="_blank">YSFlight Headquarters</a> if you need help or want to join the largest YSFlight community.
             <em>Enjoy flying online!</em>
         </p>
 
@@ -59,12 +59,12 @@
                             <img src="{{ Vite::asset('resources/images/flags/'.strtolower($server->country).'.gif') }}" title="{{ strtoupper($server->country) }} - Distance to the server: {{ round($server->distance($location), 1) }}mi">
                             <a href="{{ route('server.show', ['server' => $server->id]) }}" title="owner: {{ $server->owner }} | YS version: {{ $server->status == 'Online' ? $server->game->version : 'N/A' }}">{{ $server->name }}</a>
                             @if (gethostbyname($server->ip)==Request::ip())
-                                {!! Form::open(['route' => ['server.destroy', $server->id], 'method' => 'delete']) !!}
+                                {{ html()->form('DELETE', '/server/'.$server->id)->open() }}
                                 <div class="btn-group" role="group">
-                                    {!! link_to_route('server.edit', 'Edit', $server->id, ['class' => 'btn btn-default btn-xs']) !!}
+                                    <a href="{{ route('server.edit', ['server' => $server->id]) }}" class="btn btn-default btn-xs">Edit</a>
                                     <button type="submit" class="btn btn-default btn-xs">Delete</button>
                                 </div>
-                                {!! Form::close() !!}
+                                {{ html()->form()->close() }}
                             @endif
                         </td>
                         <td class="ip">
