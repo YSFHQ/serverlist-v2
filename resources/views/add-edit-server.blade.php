@@ -6,9 +6,9 @@
     <div class="col-md-6 col-md-offset-3">
 
     @if (isset($server))
-    {{ html()->modelForm($server, 'PUT', '/server/'.$server->id) }}
+    {{ html()->modelForm($server, 'PUT', route('server.update', $server->id)) }}
     @else
-    {{ html()->form('POST', '/server')->open() }}
+    {{ html()->form('POST', route('server.store'))->open() }}
         <div class="alert alert-warning" role="alert">
             NOTE: Your server must be online and unlocked in order to add it.
         </div>
