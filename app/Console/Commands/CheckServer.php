@@ -34,7 +34,7 @@ class CheckServer extends Command
     public function handle()
     {
         ob_start();
-        passthru('/usr/bin/python2.7 '.base_path().'/ys_proto.py '.$this->argument('ip').' '.$this->argument('port'));
+        passthru('/usr/bin/python3 '.base_path().'/ys_proto.py '.$this->argument('ip').' '.$this->argument('port'));
         $output = ob_get_clean();
         $output = json_decode($output);
         print_r($output);

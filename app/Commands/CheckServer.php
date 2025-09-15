@@ -26,7 +26,7 @@ class CheckServer
     public function handle()
     {
         ob_start();
-        passthru('/usr/bin/python2.7 '.base_path().'/ys_proto.py '.$this->server->ip.' '.$this->server->port);
+        passthru('/usr/bin/python3 '.base_path().'/ys_proto.py '.$this->server->ip.' '.$this->server->port);
         $output = ob_get_clean();
         $output = json_decode($output);
 

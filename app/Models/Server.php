@@ -70,12 +70,42 @@ class Server extends Model
 
     public function getStatusAttribute()
     {
-        return Cache::get($this->ip.':'.$this->port)->status;
+        $cacheKey = $this->ip.':'.$this->port;
+        $cachedData = Cache::get($cacheKey);
+
+        if ($cachedData && isset($cachedData->status)) {
+            return $cachedData->status;
+        }
+
+        return 'offline';
     }
 
     public function getGameAttribute()
     {
-        return Cache::get($this->ip.':'.$this->port);
+        $cacheKey = $this->ip.':'.$this->port;
+        $cachedData = Cache::get($cacheKey);
+
+        if ($cachedData) {
+            return $cachedData;
+        }
+
+        // Return a default game object when cache is empty
+        return (object) [
+            'status' => 'offline',
+            'map' => 'Unknown',
+            'users' => 0,
+            'flyingUsers' => 0,
+            'missileON' => false,
+            'weaponON' => false,
+            'blackoutON' => false,
+            'collON' => false,
+            'landevON' => false,
+            'weather' => [0, 0, 0.0, 0.0, 0.0, 0.0],
+            'userOption' => 0,
+            'radarAlti' => '',
+            'f3view' => true,
+            'userList' => []
+        ];
     }
 
     public function checkServer()
@@ -87,6 +117,10 @@ class Server extends Model
 
     public function mapLink()
     {
+        if (!isset($this->game->map) || empty($this->game->map)) {
+            return null;
+        }
+
         $map = $this->game->map;
 
         if (!Cache::has('map_links')) {
@@ -101,8 +135,12 @@ class Server extends Model
 
         $maps = Cache::get('map_links', []);
 
+        if (!is_array($maps)) {
+            return null;
+        }
+
         $maps_found = array_filter($maps, function ($var) use ($map) {
-            return $var['mapname']==$map;
+            return isset($var['mapname']) && $var['mapname'] == $map;
         });
 
         if (count($maps_found)) return reset($maps_found);

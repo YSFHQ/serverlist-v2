@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 
@@ -40,16 +40,16 @@ class YS_proto_snd:
     def login(self, username="test_user", version=20110207):
         """
         Returns a packet of type 1: login
-        @type char[16]: username
+        @type str: username
         @type int: YS net-version
         @return: The login packet
         """
-        username = username[0:15]
+        username = username[0:15].encode('utf-8')
         version = int(version)
         return self.snd(pack("I16sI",1,username, version))
 
     def oneint(self, integer):
-        return self.snd(pack("I",integer))
+        return self.snd(pack("I", int(integer)))
 
 class YS_proto_rcv:
     """Serialization class: each method return the information
@@ -66,18 +66,16 @@ class YS_proto_rcv:
     def map(self, buffer):
         """
         Read packet of type 4
-        @type byte[]: buffer
+        @type bytes: buffer
         @return: A tuple containing the name of the map
         """
-        # check the size of the packet is correct
-        # make try/catch ...
         return unpack("60s",buffer)
 
 
     def msg(self, buffer):
         """
         Read packet of type 32
-        @type byte[]: buffer
+        @type bytes: buffer
         @return: The tuple (unknown_long, chat_message)
         """
         decode = "l"+str(len(buffer)-8)+"s"
@@ -86,7 +84,7 @@ class YS_proto_rcv:
     def oneint(self, buffer):
         """
         Read packet of type 29, 31, 39
-        @type byte[]: buffer
+        @type bytes: buffer
         @return: (tuple) The YS version of the server,
                  if the missiles are on or off,
                  if the weapons are on or off, ...
@@ -97,7 +95,7 @@ class YS_proto_rcv:
     def userList(self, buffer):
         """
         Read packet of type 37
-        @type byte[]: buffer
+        @type bytes: buffer
         @return: The tuple (action, IFF, ID, unknown, nickname)
         """
         decode = "hhII"+str(len(buffer)-12)+"s"
@@ -106,7 +104,7 @@ class YS_proto_rcv:
     def weather(self, buffer):
         """
         Read packet of type 33
-        @type byte[]: buffer
+        @type bytes: buffer
         @return: The tuple (day, options, windX, windY, windZ, visib)
         """
         return unpack("IIffff",buffer)
@@ -165,7 +163,7 @@ class Apps:
         try:
             self.s.connect((self.ip,self.port))
             self.connected = True
-        except:
+        except Exception:
             self.server.status = "offline"
             return
         if not(self.send(self.yssnd.login(username, version))):
@@ -188,7 +186,7 @@ class Apps:
         self.connected = False
         try:
             self.s.close()
-        except:
+        except Exception:
             logger.info("failed to disconnect")
 
     def send(self, buffer):
@@ -198,7 +196,7 @@ class Apps:
         try:
             self.s.send(buffer)
             return 1
-        except Exception, e:
+        except Exception as e:
             logger.info("Send failure")
             return 0
 
@@ -211,12 +209,12 @@ class Apps:
             size = self.ysrcv.oneint(self.s.recv(4))[0]
             type = self.ysrcv.oneint(self.s.recv(4))[0]
             logger.debug("size " + str(size) + " type " + str(type))
-        except:
+        except Exception:
             logger.debug("Receive failure 1")
             return (0, 0,"")
         try:
             return (size, type, self.s.recv(size-4))
-        except:
+        except Exception:
             logger.debug("Receive failure 2")
             return (size, 0,"")
 
@@ -230,8 +228,8 @@ class Apps:
             return 0
         elif type == 4:
             self.server.map = self.ysrcv.map(buffer)[0]
-            end = self.server.map.find('\x00')
-            self.server.map = self.server.map[:end]
+            end = self.server.map.find(b'\x00')
+            self.server.map = self.server.map[:end].decode('utf-8', errors='ignore')
             logger.info("map " + self.server.map)
             self.send(self.yssnd.reply(4,buffer))
             # ask to get the weather packet:
@@ -255,16 +253,26 @@ class Apps:
             logger.info("missileON " + str(self.server.missileON))
             self.send(self.yssnd.ack(10,0))
         elif type == 32:
-            msg = self.ysrcv.msg(buffer)[1]
+            msg = self.ysrcv.msg(buffer)[1].decode('utf-8', errors='ignore')
             logger.info("message " + msg)
         elif type == 33:
             self.server.weather = self.ysrcv.weather(buffer)
             opts = bin(self.server.weather[1])
-            self.server.collON = bool(int(opts[5]))
+            opts_str = str(opts)
+            if len(opts_str) > 5:
+                self.server.collON = bool(int(opts_str[-5]))
+            else:
+                self.server.collON = False
+            if len(opts_str) > 7:
+                self.server.blackoutON = bool(int(opts_str[-7]))
+            else:
+                self.server.blackoutON = False
+            if len(opts_str) > 3:
+                self.server.landevON = bool(int(opts_str[-3]))
+            else:
+                self.server.landevON = False
             logger.info("collON " + str(self.server.collON))
-            self.server.blackoutON = bool(int(opts[7]))
             logger.info("blackoutON " + str(self.server.blackoutON))
-            self.server.landevON = bool(int(opts[3]))
             logger.info("landevON " + str(self.server.landevON))
             logger.info(
                 "day " + str(self.server.weather[0]) +
@@ -276,7 +284,7 @@ class Apps:
             self.send(self.yssnd.ack(4,0))
         elif type == 37: # Never received, FIXME
             user = list(self.ysrcv.userList(buffer))
-            user[4] = user[4].rstrip('\0') # to remove null at end
+            user[4] = user[4].rstrip(b'\0').decode('utf-8', errors='ignore') # to remove null at end
             user = tuple(user)
             self.server.userList.append(user)
             if user[0] == 1 or user[0] == 3:
@@ -294,13 +302,13 @@ class Apps:
         elif type == 43:
             self.send(self.yssnd.reply(43,buffer))
             mesg = self.ysrcv.airDisplayOpt(buffer)[1]
-            if mesg[:14] == "NOEXAIRVW TRUE":
+            if mesg[:14] == b"NOEXAIRVW TRUE":
                 logger.info("no F3 view")
                 self.server.f3view = False
             else:
                 try:
                     self.server.radarAlti = float(mesg[10:-2])
-                except:
+                except Exception:
                     self.server.radarAlti = 0
                 logger.info("radar alti " + str(self.server.radarAlti))
         elif type == 44:
@@ -318,7 +326,7 @@ if __name__ =='__main__':
 
     apps = Apps(sys.argv[1], int(sys.argv[2]), 5)
     state = apps.connect("serverlist_bot", 20150425)
-    print json.dumps(vars(apps.server))
+    print(json.dumps(vars(apps.server)))
     #print "------------cvw-------"
     #apps = Apps("cvw171.dyndns.org", 7915, 5)
     #state = apps.connect("ys_py_lib", 20110207)
