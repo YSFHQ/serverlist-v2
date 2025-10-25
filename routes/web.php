@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\StaticController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -21,10 +22,4 @@ if (str_starts_with(env('APP_URL'), 'https://')) {
 
 Route::resource('server', ServerController::class);
 
-Route::controller(ServerController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/map', 'map')->name('map');
-    Route::get('/stats', 'stats')->name('stats');
-    Route::get('/log', 'log')->name('log');
-    Route::get('/help', 'help')->name('help');
-});
+Route::get('/', [ServerController::class, 'index'])->name('index');
