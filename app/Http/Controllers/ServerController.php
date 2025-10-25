@@ -76,7 +76,7 @@ class ServerController extends Controller
             $server->delete();
             return back()->withInput()->with('error', 'Could not connect to server. Please make sure it is online and unlocked.');
         }
-        return redirect()->route('server.show', ['id' => $server->id])->with('success', 'Server created.');
+        return redirect()->route('server.show', ['server' => $server->id])->with('success', 'Server created.');
     }
 
     /**
