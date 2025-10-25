@@ -318,7 +318,8 @@ class Apps:
 
 if __name__ =='__main__':
     logger = logging.getLogger('ys_proto')
-    hdlr = logging.FileHandler('/tmp/ysproto.log')
+    # hdlr = logging.FileHandler('/tmp/ysproto.log')
+    hdlr = logging.StreamHandler(sys.stderr)
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr)
