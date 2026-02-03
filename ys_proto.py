@@ -255,6 +255,10 @@ class Apps:
         elif type == 32:
             msg = self.ysrcv.msg(buffer)[1].decode('utf-8', errors='ignore')
             logger.info("message " + msg)
+            # A message from a server maybe player generated and does not
+            # contribute to any in-game infomation, avoid incrementing
+            # the packet count, as this is not progress.
+            self.packets -= 1
         elif type == 33:
             self.server.weather = self.ysrcv.weather(buffer)
             opts = bin(self.server.weather[1])
